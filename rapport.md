@@ -110,6 +110,8 @@ server s2 ${WEBAPP_2_IP}:3000 check cookie s2
 
 4. Provide a sequence diagram to explain what is happening when one requests the URL for the first time and then refreshes the page. We want to see what is happening with the cookie. We want to see the sequence of messages exchanged (1) between the browser and HAProxy and (2) between HAProxy and the nodes S1 and S2. We also want to see what is happening when a second browser is used.
 
+   > ![image-20201202114904710](assets/img/2.4.4.png)
+
 5. Provide a screenshot of JMeter's summary report. Is there a difference with this run and the run of Task 1?
 
 * Clear the results in JMeter.
