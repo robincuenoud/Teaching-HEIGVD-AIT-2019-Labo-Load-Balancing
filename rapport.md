@@ -2,8 +2,9 @@
 
 Authors: Cuénoud Robin, Dupont Maxime, Mulhauser Florian
 
-
 ## Introduction
+
+The goal of this lab is to experiment with a web-application and a load balancer and analyze different implementation of the load balancer. 
 
 
 ## Pre-Task 1
@@ -122,6 +123,14 @@ server s2 ${WEBAPP_2_IP}:3000 check cookie s2
 
 4. Provide a sequence diagram to explain what is happening when one requests the URL for the first time and then refreshes the page. We want to see what is happening with the cookie. We want to see the sequence of messages exchanged (1) between the browser and HAProxy and (2) between HAProxy and the nodes S1 and S2. We also want to see what is happening when a second browser is used.
 
+   > ![image-20201202114904710](assets/img/2.4.4.png)
+   >
+   > When a second user is used, the HAPRoxy see's no `SERVERID` cookie so it uses round robin to determine the server. For example S2 and here's the diagram :
+   >
+   > ![2.4.2](assets/img/2.4.2.png)
+   >
+   > On the second request, the HAProxy identify the `SERVERID` cookie and send it to the correct server (S2 in this case). 
+
 5. Provide a screenshot of JMeter's summary report. Is there a difference with this run and the run of Task 1?
 
 >  ![](assets/img/2.5.PNG)  
@@ -145,3 +154,5 @@ We can see that we still have a 50/50 split, however it is for another reason, w
 
 
 ## Conclusion
+
+We have learned few ways of implementing an HAProxy and compared some ways to do it by running JMETER to compare them. 
