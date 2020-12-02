@@ -4,7 +4,7 @@ Authors: Cuénoud Robin, Dupont Maxime, Mulhauser Florian
 
 ## Introduction
 
-The goal of this lab is to experiment with a web-application and a load balancer and analyze different implementation of the load balancer. 
+The goal of this lab is to experiment with a web-application and a load balancer and analyze different implementation of the load balancer. We got familiar with the tools used for this lab, even though the windows fix caused some unforseen troubles (turns out git considers .png files as text files so we lost all our pictures, we had to had another line to .gitattribute and run some scripts to restore images we didn't have locally anymore). Then we implemented sticky session and looked at some modes offered by the load balancer.
 
 
 ## Pre-Task 1
@@ -161,26 +161,49 @@ We can see that we still have a 50/50 split, however it is for another reason, w
 
 2. Based on your previous answer, set the node in DRAIN mode. Take a
     screenshot of the HAProxy state page.
+    
+    >  ![](assets/img/3.2.PNG)  
+    We can see that the node is now in DRAIN mode.
+
 
 3. Refresh your browser and explain what is happening. Tell us if you
-    stay on the same node or not. If yes, why? If no, why?
+    stay on the same node or not. If yes, why? If no, why? 
+    
+    > We stay on the same node when we refresh, this is because Drain mode is to prevent new connections, old sessions however, are preserved and still go to that node.
 
 4. Open another browser and open `http://192.168.42.42`. What is
     happening?
+    
+    > When I open an incognito tab on Chrome or when I open another browser, I am redirected to s1, this is because the cookies aren't the same, and since s2 is in drain mode, the only server up accepting new connections is s1, so every request is send there by the load balancer.
 
 5. Clear the cookies on the new browser and repeat these two steps
     multiple times. What is happening? Are you reaching the node in
     DRAIN mode?
+    
+    > I already kinda answered this question in the previous part, because I used more than 1 new browser, I am never reaching the node in DRAIN mode because each connection counts as a new one (we cleared our cookies), and Drain mode makes it so the node doesn't accept new connections, thus I am send towards s1 everytime.
 
 6. Reset the node in READY mode. Repeat the three previous steps and
     explain what is happening. Provide a screenshot of HAProxy's stats
     page.
+    
+    > ![](assets/img/3.6.1.PNG)  
+    This is the stat page after I set s2 in READY mode, time to test things out :
+    
+    
+    > Everytime I clear my cookies I get sent to a different server, this is correct, because it counts as a new session so sticky sessions don't apply, and we just get sent to a server following the round robin policy.
+
 
 7. Finally, set the node in MAINT mode. Redo the three same steps and
     explain what is happening. Provide a screenshot of HAProxy's stats
     page.
+    
+    > ![](assets/img/3.7.1.PNG)      
+    We can see the state was correctly switched to maint on the second server.  
+    
+    > Now , whatever the connection I try, I always get send to s1, wheter it be a new broswer with cleared cookies, or my old browser which had a session with s2, everytime I just get a new session on s1, this is because s2 is in maintenance mode, which means that the server accepts no connections, regardless of sessions.
+
 
 
 ## Conclusion
 
-We have learned few ways of implementing an HAProxy and compared some ways to do it by running JMETER to compare them. 
+We have learned few ways of implementing an HAProxy and compared some ways to do it by running JMETER to compare them. This made the behaviour of a load balancer clearer in our mind, and introduced us to some ways git works, even though it wasn't the goal of this lab.
