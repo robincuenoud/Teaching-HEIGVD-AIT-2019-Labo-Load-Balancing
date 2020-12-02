@@ -72,6 +72,18 @@ Clear the results in JMeter and re-run the test plan. Explain what is happening 
 ##### Deliverables:
 
 1. There is different way to implement the sticky session. One possibility is to use the SERVERID provided by HAProxy. Another way is to use the NODESESSID provided by the application. Briefly explain the difference between both approaches (provide a sequence diagram with cookies to show the difference).
+
+   > SERVERID is a server level id cookie, NODESESSID is an application level id cookie. The SERVERID is set by the HAProxy, the NODESESSID is set by the application. 
+   >
+   > In the first request the HAProxy set the `SERVERID` cookie to `1` (which stands for S1) and the S1 set the `NODESESSID` cookie. 
+   >
+   > In the second request in the following diagram show the HAProxy redirecting to S1 with the SERVERID cookie. An other user could have `SERVERID=2` and be redirected to S2.
+   >
+   > Note: Only the cookie that matter for the corresponding arrow are written.
+   >
+   > The `NODESESSID` can be unknow to the HAProxy. Therefore we'll use a `SERVERID` load balancing. 
+   >
+   > ![Artboard 1](/Users/robin/Desktop/Teaching-HEIGVD-AIT-2019-Labo-Load-Balancing/assets/img/shema_01_serverid.png)
 * Choose one of the both stickiness approach for the next tasks.  
 
 2. Provide the modified haproxy.cfg file with a short explanation of the modifications you did to enable sticky session management.
