@@ -27,6 +27,7 @@ About session management, we can see that the session id changes everytime we re
 >
 >First time for our example :
 >![](assets/img/1.1.1.PNG)
+
 >Now we refresh : 
 ![](assets/img/1.1.2.PNG)  
 We can see that the session id isnt the same, which makes sense because we are on another server, let's refresh one more time and see what happens :
@@ -89,6 +90,7 @@ Clear the results in JMeter and re-run the test plan. Explain what is happening 
 2. Provide the modified haproxy.cfg file with a short explanation of the modifications you did to enable sticky session management.
 
 > We decided to go for the `SERVERID` implementation, here are the modifications we did in the `haproxy.cfg` file : 
+
 ```
 backend nodes
 [...]
@@ -100,6 +102,8 @@ cookie SERVERID insert indirect nocache
 server s1 ${WEBAPP_1_IP}:3000 check cookie s1
 server s2 ${WEBAPP_2_IP}:3000 check cookie s2
 ```
+
+
 > The first line instructs HAProxy to setup a cookie, only in the event that the client did not already provide one, this makes it so we have a cookie to use during load balancing. Then we added the `check cookie` line to allow the load balancer to know where to route requests based on the cookies.
 
 
@@ -107,10 +111,22 @@ server s2 ${WEBAPP_2_IP}:3000 check cookie s2
 3. Explain what is the behavior when you open and refresh the URL http://192.168.42.42 in your browser. Add screenshots to complement your explanations. We expect that you take a deeper a look at session management.
 
 
+> ![](assets/img/2.3.PNG)  
+> We can see here that the session stays the same, and the sessionViews get incremented, which means we enter the same session everytime. Since both servers are active, it means we implemented sticky sessions correctly (otherwise we would see a behavior similar to the one we had in task 1).  
+> When we inspect the request, we can see our cookie is in there, and it is used by the load balancer to determine where to route it :  
+>![](assets/img/2.3.2.PNG)
+
+
+
+
 
 4. Provide a sequence diagram to explain what is happening when one requests the URL for the first time and then refreshes the page. We want to see what is happening with the cookie. We want to see the sequence of messages exchanged (1) between the browser and HAProxy and (2) between HAProxy and the nodes S1 and S2. We also want to see what is happening when a second browser is used.
 
 5. Provide a screenshot of JMeter's summary report. Is there a difference with this run and the run of Task 1?
+
+>  ![](assets/img/2.5.PNG)  
+We can see that we go to the same server everytime, which is different from task 1 (where it was a 50 / 50 split), that means we implemented sticky sessions correctly.
+
 
 * Clear the results in JMeter.
 
@@ -119,7 +135,12 @@ server s2 ${WEBAPP_2_IP}:3000 check cookie s2
 * Go in Thread Group and update the Number of threads. Set the value to 2.
 
 7. Provide a screenshot of JMeter's summary report. Give a short explanation of what the load balancer is doing.
+ 
+> ![](assets/img/2.7.PNG)  
+We can see that we still have a 50/50 split, however it is for another reason, when thread1 (user1) got sent to a server , it got given a cookie, and then for everytime it requested again, it got sent to the same server, same as thread2, which was send to the other server because of the round robin policy, thus we have a 50/50 split  of which serverse were reached.
 
+
+## Task 3: Drain mode
 
 
 
