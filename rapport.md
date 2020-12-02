@@ -88,7 +88,25 @@ Clear the results in JMeter and re-run the test plan. Explain what is happening 
 
 2. Provide the modified haproxy.cfg file with a short explanation of the modifications you did to enable sticky session management.
 
+> We decided to go for the `SERVERID` implementation, here are the modifications we did in the `haproxy.cfg` file : 
+```
+backend nodes
+[...]
+
+cookie SERVERID insert indirect nocache
+
+# Define the list of nodes to be in the balancing mechanism
+# http://cbonte.github.io/haproxy-dconv/2.2/configuration.html#4-server
+server s1 ${WEBAPP_1_IP}:3000 check cookie s1
+server s2 ${WEBAPP_2_IP}:3000 check cookie s2
+```
+> The first line instructs HAProxy to setup a cookie, only in the event that the client did not already provide one, this makes it so we have a cookie to use during load balancing. Then we added the `check cookie` line to allow the load balancer to know where to route requests based on the cookies.
+
+
+
 3. Explain what is the behavior when you open and refresh the URL http://192.168.42.42 in your browser. Add screenshots to complement your explanations. We expect that you take a deeper a look at session management.
+
+
 
 4. Provide a sequence diagram to explain what is happening when one requests the URL for the first time and then refreshes the page. We want to see what is happening with the cookie. We want to see the sequence of messages exchanged (1) between the browser and HAProxy and (2) between HAProxy and the nodes S1 and S2. We also want to see what is happening when a second browser is used.
 
