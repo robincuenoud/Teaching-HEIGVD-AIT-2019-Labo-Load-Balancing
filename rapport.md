@@ -144,7 +144,7 @@ We can see that we go to the same server everytime, which is different from task
 * Go in Thread Group and update the Number of threads. Set the value to 2.
 
 7. Provide a screenshot of JMeter's summary report. Give a short explanation of what the load balancer is doing.
- 
+
 > ![](assets/img/2.7.PNG)  
 We can see that we still have a 50/50 split, however it is for another reason, when thread1 (user1) got sent to a server , it got given a cookie, and then for everytime it requested again, it got sent to the same server, same as thread2, which was send to the other server because of the round robin policy, thus we have a 50/50 split  of which serverse were reached.
 
@@ -180,6 +180,13 @@ We can see that we still have a 50/50 split, however it is for another reason, w
     explain what is happening. Provide a screenshot of HAProxy's stats
     page.
 
+## Task 4: 
+
+## Task 5:
+
+1. `leastconn `seams effective because the server with the lowest number of connections receives it. 
+
+   The second will be `uri` because since our web app got only one url it will be always the same so we can highlight a problem of this algorithm (for small application). 
 
 ## Conclusion
 
