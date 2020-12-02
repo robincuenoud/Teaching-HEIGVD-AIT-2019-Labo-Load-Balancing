@@ -83,7 +83,7 @@ Clear the results in JMeter and re-run the test plan. Explain what is happening 
    >
    > The `NODESESSID` can be unknow to the HAProxy. Therefore we'll use a `SERVERID` load balancing. 
    >
-   > ![Artboard 1](/Users/robin/Desktop/Teaching-HEIGVD-AIT-2019-Labo-Load-Balancing/assets/img/shema_01_serverid.png)
+   > ![Artboard 1](assets/img/SHEMA01.png)
 * Choose one of the both stickiness approach for the next tasks.  
 
 2. Provide the modified haproxy.cfg file with a short explanation of the modifications you did to enable sticky session management.
