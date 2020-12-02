@@ -2,8 +2,9 @@
 
 Authors: Cuénoud Robin, Dupont Maxime, Mulhauser Florian
 
-
 ## Introduction
+
+The goal of this lab is to experiment with a web-application and a load balancer and analyze different implementation of the load balancer. 
 
 
 ## Pre-Task 1
@@ -132,3 +133,5 @@ server s2 ${WEBAPP_2_IP}:3000 check cookie s2
 
 
 ## Conclusion
+
+We have learned few ways of implementing an HAProxy and compared some ways to do it by running JMETER to compare them. 
