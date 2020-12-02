@@ -26,11 +26,11 @@ I had to use the ip address `http://192.168.99.101:80` to get access to the load
 About session management, we can see that the session id changes everytime we refresh : 
 >
 >First time for our example :
->![](images/1.1.1.PNG)
+>![](assets/img/1.1.1.PNG)
 >Now we refresh : 
-![](images/1.1.2.PNG)  
+![](assets/img/1.1.2.PNG)  
 We can see that the session id isnt the same, which makes sense because we are on another server, let's refresh one more time and see what happens :
-![](images/1.1.3.PNG) 
+![](assets/img/1.1.3.PNG) 
 So now we are back the the same server, but we can see that the session id isn't the same. Which means that the user has a new session with the same server, this isn't a problem as of now but it can become one depending on what we implement onto new servers. It is safe to say that as of right now, there is no session management (since we just create a new one everytime).
 
 
@@ -43,14 +43,14 @@ So now we are back the the same server, but we can see that the session id isn't
 
 
 
-> ![](images/1.3.png)
+> ![](assets/img/1.3.png)
 
 
 
 4. Provide a screenshot of the summary report from JMeter.
 
 
-> ![](images/1.4.PNG)
+> ![](assets/img/1.4.PNG)
 
 
 5. Run the following command:
@@ -60,11 +60,11 @@ So now we are back the the same server, but we can see that the session id isn't
 Clear the results in JMeter and re-run the test plan. Explain what is happening when only one node remains active. Provide another sequence diagram using the same model as the previous one.
 
 > Now what's happening is that the load balancer routes the requests to the only server that's working, s2, so since it already knows the session ID , and can keep the same session with one user. Thus sessionViews is correctly incremented (because we stay inside the same session instead of creating a new one everytime).
-![](images/1.5.1.PNG)  
+![](assets/img/1.5.1.PNG)  
 > We can see the JMeter results confirm the same thing we thought, every request is going to the same server. 
-![](images/1.5.2.PNG)  
+![](assets/img/1.5.2.PNG)  
 >Here is a new graph showing what happens now that s1 is down :
-![](images/1.5.3.png)  
+![](assets/img/1.5.3.png)  
 > Behaviour is mostly the same, except for the fact that we stay in the same session.
 
 ## Task 2: Sticky sessions
